@@ -1,0 +1,56 @@
+exports.up = function (knex) {
+	return knex.schema
+		.createTable('roles', (tbl) => {
+			tbl.increments();
+			tbl.string('role_name', 128)
+				.notNullable()
+				.unique();
+		})
+		.createTable('locations', (tbl) => {
+			tbl.increments();
+			tbl.string('location_name', 128).notNullable();
+			tbl.string('location_address', 256)
+				.notNullable()
+				.unique();
+		})
+		.createTable('users', (tbl) => {
+			tbl.increments();
+			tbl.string('username', 128)
+				.notNullable()
+				.unique();
+			tbl.string('password', 128).notNullable();
+			tbl.bigint('role_id')
+				.unsigned()
+				.references('roles.id')
+				.onDelete('CASCADE')
+				.onUpdate('CASCADE');
+		})
+		.createTable('classes', (tbl) => {
+			tbl.increments();
+			tbl.string('class_name', 128).notNullable();
+			tbl.string('class_type', 128).notNullable();
+			tbl.datetime('class_start').notNullable();
+			tbl.string('duration').notNullable();
+			tbl.integer('class_intensity').notNullable();
+			tbl.integer('class_enrolled');
+			tbl.integer('class_max').notNullable();
+			tbl.bigint('user_id')
+				.unsigned()
+				.references('users.id')
+				.onDelete('CASCADE')
+				.onUpdate('CASCADE');
+			tbl.bigint('location_id')
+				.unsigned()
+				.references('locations.id')
+				.onDelete('CASCADE')
+				.onUpdate('CASCADE');
+		});
+};
+
+exports.down = function (knex) {
+	return knex.schema
+		.dropTableIfExists('classes')
+		.dropTableIfExists('users')
+		.dropTableIfExists('locations')
+		.dropTableIfExists('roles');
+};
