@@ -1,4 +1,5 @@
 // !! Update with your config settings.
+require('dotenv').config();
 
 const sharedConfig = {
 	client: 'sqlite3',
@@ -24,5 +25,9 @@ module.exports = {
 	testing: {
 		...sharedConfig,
 		connection: { filename: './data/testing.db3' },
+	},
+	production: {
+		...sharedConfig,
+		connection: { filename: './data/anywhereFitness.db3' },
 	},
 };

@@ -17,22 +17,24 @@ exports.up = function (knex) {
 			tbl.increments();
 			tbl.string('username', 128)
 				.notNullable()
-				.unique();
+				.unique()
+				.index();
 			tbl.string('password', 128).notNullable();
-			tbl.bigint('role_id')
+			tbl.integer('role_id')
 				.unsigned()
 				.references('roles.id')
-				.onDelete('CASCADE')
-				.onUpdate('CASCADE');
+				.onDelete('RESTRICT')
+				.onUpdate('CASCADE')
+				.defaultTo(2);
 		})
 		.createTable('classes', (tbl) => {
 			tbl.increments();
 			tbl.string('class_name', 128).notNullable();
 			tbl.string('class_type', 128).notNullable();
 			tbl.datetime('class_start').notNullable();
-			tbl.string('duration').notNullable();
+			tbl.string('class_duration').notNullable();
 			tbl.integer('class_intensity').notNullable();
-			tbl.integer('class_enrolled');
+			tbl.integer('class_enrolled').defaultTo(0);
 			tbl.integer('class_max').notNullable();
 			tbl.bigint('user_id')
 				.unsigned()
