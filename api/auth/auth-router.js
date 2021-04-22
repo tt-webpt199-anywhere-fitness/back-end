@@ -22,7 +22,11 @@ authRouter.post(
 			const user = await Users.create(credentials);
 			res.status(201).json(user);
 		} catch (err) {
-			next(err);
+			next({
+				apiCode: 500,
+				apiMessage: 'Error saving new user',
+				...err,
+			});
 		}
 	}
 );
@@ -32,7 +36,7 @@ authRouter.post('/login', checkPayload, async (req, res, next) => {
 	const { username, password } = req.body;
 	try {
 		const [user] = await Users.findBy({
-			username,
+			username: username,
 		});
 		if (user && bcrypt.compareSync(password, user.password)) {
 			const token = generateToken(user);
