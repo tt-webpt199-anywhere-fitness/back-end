@@ -20,30 +20,41 @@ authRouter.post('/register', checkBodyContents, async (req, res, next) => {
 });
 
 // TODO POST ==> /api/auth/login ==> Log in
-authRouter.post('/login', checkUsernameExists, async (req, res, next) => {
-	const { username, password } = req.body;
-	try {
-		const [user] = await Users.findById({ username: username });
-		if (user && bcrypt.compareSync(password, user.password)) {
-			const token = generateToken(user);
-			res.status(200).json({
-				message: `Welcome back, ${user.username}!`,
-				token: token,
+authRouter.post(
+	'/login',
+	/*checkUsernameExists,*/ async (req, res, next) => {
+		const { username, password } = req.body;
+		try {
+			const [user] = await Users.findById({
+				username: username,
 			});
-		} else {
+			if (
+				user &&
+				bcrypt.compareSync(
+					password,
+					user.password
+				)
+			) {
+				const token = generateToken(user);
+				res.status(200).json({
+					message: `Welcome back, ${user.username}!`,
+					token: token,
+				});
+			} else {
+				next({
+					apiCode: 401,
+					apiMessage: `User ${user.username} does not exist`,
+				});
+			}
+		} catch (err) {
 			next({
-				apiCode: 401,
-				apiMessage: 'Invalid credentials',
+				apiCode: 500,
+				apiMessage: 'Error loggin in',
+				...err,
 			});
 		}
-	} catch (err) {
-		next({
-			apiCode: 500,
-			apiMessage: 'Error loggin in',
-			...err,
-		});
 	}
-});
+);
 
 function generateToken(user) {
 	const payload = {
