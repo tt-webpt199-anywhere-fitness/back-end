@@ -5,6 +5,7 @@ const errorHandler = require('./errorHandler');
 
 // TODO ==> routers
 const authRouter = require('./auth/auth-router');
+const userRouter = require('./auth/user-router');
 
 const server = express();
 
@@ -14,6 +15,7 @@ server.use(cors());
 
 // TODO ==> server.use(routers)
 server.use('/api/auth', authRouter);
+server.use('/api/auth', userRouter);
 
 server.use(errorHandler);
 
