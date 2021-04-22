@@ -42,7 +42,7 @@ const restricted = (req, res, next) => {
 
 // ?? checkRole ==> Restricts access for creating classes to Instructor role
 const checkRole = (role_name) => (req, res, next) => {
-	if ((req?.decodedToken?.role_name || ' ') === role_name) {
+	if ((req?.decodedToken?.role_name || '') === role_name) {
 		next();
 	} else {
 		next({ apiCode: 403, apiMessage: 'Access denied' });
@@ -72,22 +72,18 @@ const checkUsernameExists = async (req, res, next) => {
 };
 
 const checkBodyContents = async (req, res, next) => {
-	const user = req.body;
-	try {
-		if (!user.username || !user.password) {
-			next({
-				apiCode: 400,
-				apiMessage:
-					'Registered user must contain username and password',
-			});
-		} else {
-			next();
-		}
-	} catch (err) {
+	const { username, password } = req.body;
+	const valid = Boolean(
+		username && password && typeof password === 'string'
+	);
+
+	if (valid) {
+		next();
+	} else {
 		next({
-			apiCode: 500,
-			apiMessage: 'Error creating user',
-			...err,
+			apiCode: 422,
+			apiMessage:
+				'Please provide username and password',
 		});
 	}
 };

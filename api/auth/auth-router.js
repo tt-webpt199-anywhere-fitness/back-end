@@ -25,7 +25,7 @@ authRouter.post('/login', checkUsernameExists, async (req, res, next) => {
 	try {
 		const [user] = await Users.findById({ username: username });
 		if (user && bcrypt.compareSync(password, user.password)) {
-			const token = generatedToken(user);
+			const token = generateToken(user);
 			res.status(200).json({
 				message: `Welcome back, ${user.username}!`,
 				token: token,

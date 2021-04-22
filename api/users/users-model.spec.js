@@ -35,19 +35,19 @@ describe('users-model', () => {
 			const users = await db('users');
 			expect(users).toHaveLength(1);
 		});
-		// test('database contains expected data', async () => {
-		// 	await Users.create(user);
+		test('database contains expected data', async () => {
+			await Users.create(user);
 
-		// 	const expected = [
-		// 		{
-		// 			id: 1,
-		// 			username: 'bobross',
-		// 			password: 'abc123',
-		// 			role_name: 'instructor',
-		// 		},
-		// 	];
-		// 	const users = await db('users');
-		// 	expect(users).toEqual(expected);
-		// });
+			const expected = [
+				{
+					id: 1,
+					username: 'bobross',
+					password: 'abc123',
+					role_name: 'instructor',
+				},
+			];
+			const users = await db('users');
+			expect(users).toEqual(expected);
+		});
 	});
 });
