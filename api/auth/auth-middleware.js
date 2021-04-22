@@ -4,14 +4,14 @@ const bcrypt = require('bcryptjs');
 // ?? checkUsernameExists ==> Verify that username exists in the database
 const checkUsernameExists = async (req, res, next) => {
 	try {
-		let { username, password } = req.body;
+		let { username } = req.body;
 		const user = await Users.findBy({ username }).first();
-		if (user && bcrypt.compareSync(password, user.password)) {
+		if (!user) {
 			next();
 		} else {
 			next({
 				apiCode: 401,
-				apiMessage: 'Invalid credentials',
+				apiMessage: 'Username already exists',
 			});
 		}
 	} catch (err) {
@@ -23,7 +23,7 @@ const checkUsernameExists = async (req, res, next) => {
 	}
 };
 
-const checkBodyContents = async (req, res, next) => {
+const checkPayload = async (req, res, next) => {
 	const credentials = req.body;
 	const valid = Boolean(
 		credentials.username &&
@@ -44,5 +44,5 @@ const checkBodyContents = async (req, res, next) => {
 
 module.exports = {
 	checkUsernameExists,
-	checkBodyContents,
+	checkPayload,
 };
