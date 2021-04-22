@@ -5,7 +5,7 @@ const errorHandler = require('./errorHandler');
 
 // TODO ==> routers
 const authRouter = require('./auth/auth-router');
-const userRouter = require('./auth/user-router');
+const userRouter = require('./users/user-router');
 
 const server = express();
 
