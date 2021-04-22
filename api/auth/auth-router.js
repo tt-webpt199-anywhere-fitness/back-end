@@ -32,7 +32,7 @@ authRouter.post('/login', checkPayload, async (req, res, next) => {
 	const { username, password } = req.body;
 	try {
 		const [user] = await Users.findBy({
-			username: username,
+			username,
 		});
 		if (user && bcrypt.compareSync(password, user.password)) {
 			const token = generateToken(user);
