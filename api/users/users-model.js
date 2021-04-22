@@ -27,6 +27,7 @@ function findBy(filter) {
 	return db('users')
 		.join('roles', 'roles.id', 'users.role_id')
 		.select('users.id', 'users.username', 'roles.role_name')
-		.where(filter);
+		.where(filter)
+		.first();
 }
 module.exports = { findAll, create, findById, findBy };

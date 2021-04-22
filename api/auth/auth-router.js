@@ -35,8 +35,8 @@ authRouter.post(
 authRouter.post('/login', checkPayload, async (req, res, next) => {
 	const { username, password } = req.body;
 	try {
-		const [user] = await Users.findBy({
-			username: username,
+		const user = await Users.findBy({
+			username,
 		});
 		if (user && bcrypt.compareSync(password, user.password)) {
 			const token = generateToken(user);
@@ -47,7 +47,7 @@ authRouter.post('/login', checkPayload, async (req, res, next) => {
 		} else {
 			next({
 				apiCode: 401,
-				apiMessage: `User ${user.username} does not exist`,
+				apiMessage: `Invalid credentials`,
 			});
 		}
 	} catch (err) {
