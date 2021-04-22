@@ -4,13 +4,16 @@ const { restricted, checkRole } = require('./users-middleware');
 
 // ?? GET ==> /api/users ==> Return array of all users
 
-userRouter.get('/', restricted, (req, res, next) => {
-	Users.findAll()
-		.then((users) => {
-			res.json(users);
-		})
-		.catch(next);
-});
+userRouter.get(
+	'/',
+	/*restricted,*/ (req, res, next) => {
+		Users.findAll()
+			.then((users) => {
+				res.json(users);
+			})
+			.catch(next);
+	}
+);
 
 // TODO GET ==> /api/users/:id ==> Return user with specified ID
 

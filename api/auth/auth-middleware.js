@@ -1,18 +1,19 @@
 const Users = require('../users/users-model');
 const bcrypt = require('bcryptjs');
 
-// ?? checkUsernameExists ==> Verify that username exists in the database
+// ?? checkUsernameExists ==> Verify that username does not exist in the database
 const checkUsernameExists = async (req, res, next) => {
 	try {
 		let { username } = req.body;
 		const user = await Users.findBy({ username }).first();
-		if (!user) {
-			next();
-		} else {
+		console.log('user =====> ', user);
+		if (user) {
 			next({
 				apiCode: 401,
 				apiMessage: 'Username already exists',
 			});
+		} else {
+			next();
 		}
 	} catch (err) {
 		next({

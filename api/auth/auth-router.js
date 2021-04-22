@@ -20,6 +20,7 @@ authRouter.post(
 			credentials.password = hash;
 
 			const user = await Users.create(credentials);
+			// const token = generateToken(user);
 			res.status(201).json(user);
 		} catch (err) {
 			next({
@@ -35,8 +36,8 @@ authRouter.post(
 authRouter.post('/login', checkPayload, async (req, res, next) => {
 	const { username, password } = req.body;
 	try {
-		const user = await Users.findBy({
-			username,
+		const [user] = await Users.findBy({
+			username: username,
 		});
 		if (user && bcrypt.compareSync(password, user.password)) {
 			const token = generateToken(user);
@@ -53,7 +54,7 @@ authRouter.post('/login', checkPayload, async (req, res, next) => {
 	} catch (err) {
 		next({
 			apiCode: 500,
-			apiMessage: 'Error loggin in',
+			apiMessage: 'Error logging in',
 			...err,
 		});
 	}

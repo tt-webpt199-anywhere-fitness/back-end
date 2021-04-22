@@ -24,10 +24,12 @@ function findById(id) {
 
 // ?? Find user (filter) ==> GET
 function findBy(filter) {
-	return db('users')
-		.join('roles', 'roles.id', 'users.role_id')
-		.select('users.id', 'users.username', 'roles.role_name')
-		.where(filter)
-		.first();
+	return (
+		db('users')
+			// .join('roles', 'roles.id', 'users.role_id')
+			// .select('users.id', 'users.username', 'roles.role_name')
+			.where(filter)
+			.orderBy('id')
+	);
 }
 module.exports = { findAll, create, findById, findBy };
