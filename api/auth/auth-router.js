@@ -25,7 +25,7 @@ authRouter.post(
 	/*checkUsernameExists,*/ async (req, res, next) => {
 		const { username, password } = req.body;
 		try {
-			const [user] = await Users.findById({
+			const [user] = await Users.findBy({
 				username: username,
 			});
 			if (
