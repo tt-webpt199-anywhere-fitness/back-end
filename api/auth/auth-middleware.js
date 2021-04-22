@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 // ?? restricted ==> Checks for valid token
 const restricted = (req, res, next) => {
 	try {
-		const token = req.header.authorization?.split(' ')[1];
+		const token = req.headers.authorization?.split(' ')[1];
 
 		if (token) {
 			jwt.verify(
@@ -72,9 +72,11 @@ const checkUsernameExists = async (req, res, next) => {
 };
 
 const checkBodyContents = async (req, res, next) => {
-	const { username, password } = req.body;
+	const credentials = req.body;
 	const valid = Boolean(
-		username && password && typeof password === 'string'
+		credentials.username &&
+			credentials.password &&
+			typeof credentials.password === 'string'
 	);
 
 	if (valid) {
