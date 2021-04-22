@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 // TODO ==> routers
+const authRouter = require('./auth/auth-router');
 
 const server = express();
 
@@ -11,6 +12,7 @@ server.use(express.json());
 server.use(cors());
 
 // TODO ==> server.use(routers)
+server.use('/api/auth', authRouter);
 
 server.use((err, req, res, next) => {
 	res.status(500).json({

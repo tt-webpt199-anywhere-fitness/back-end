@@ -1,4 +1,5 @@
 // !! Update with your config settings.
+require('dotenv').config();
 
 const sharedConfig = {
 	client: 'sqlite3',

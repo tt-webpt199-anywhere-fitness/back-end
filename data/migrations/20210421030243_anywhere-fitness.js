@@ -23,16 +23,17 @@ exports.up = function (knex) {
 				.unsigned()
 				.references('roles.id')
 				.onDelete('CASCADE')
-				.onUpdate('CASCADE');
+				.onUpdate('CASCADE')
+				.defaultTo(2);
 		})
 		.createTable('classes', (tbl) => {
 			tbl.increments();
 			tbl.string('class_name', 128).notNullable();
 			tbl.string('class_type', 128).notNullable();
 			tbl.datetime('class_start').notNullable();
-			tbl.string('duration').notNullable();
+			tbl.string('class_duration').notNullable();
 			tbl.integer('class_intensity').notNullable();
-			tbl.integer('class_enrolled');
+			tbl.integer('class_enrolled').default(0);
 			tbl.integer('class_max').notNullable();
 			tbl.bigint('user_id')
 				.unsigned()
