@@ -42,13 +42,11 @@ authRouter.post('/login', checkPayload, async (req, res, next) => {
 			const token = generateToken(user);
 			console.log('user =====> ', user);
 			res.status(200).json({
-				message: `Welcome back, ${
-					user.username
-				}, (${
+				message: `Welcome back, ${user.username}!`,
+				role:
 					user.role_id === 1
 						? 'Instructor'
-						: 'User'
-				})!`,
+						: 'User',
 				token: token,
 			});
 		} else {
