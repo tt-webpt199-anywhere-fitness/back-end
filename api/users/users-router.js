@@ -33,8 +33,9 @@ userRouter.put('/:id', checkPayload, async (req, res, next) => {
 
 	try {
 		const updatedUser = await Users.updateUser(id, user);
+		console.log('updatedUser =====> ', updatedUser);
 		if (user) {
-			res.status(200).json({ updatedUser });
+			res.status(200).json(updatedUser);
 		} else {
 			next({
 				apiCode: 404,
@@ -51,6 +52,29 @@ userRouter.put('/:id', checkPayload, async (req, res, next) => {
 	}
 });
 
-// TODO DELETE ==> /api/users/:id ==> Delete user
+// ?? DELETE ==> /api/users/:id ==> Delete user
+userRouter.delete('/:id', (req, res, next) => {
+	Users.deleteUser(req.params.id)
+		.then((count) => {
+			if (count > 0) {
+				res.status(200).json({
+					message: `User ID ${req.params.id} has been deleted successfully`,
+				});
+			} else {
+				next({
+					apiCode: 404,
+					apiMessage: `The user with the specified ID (${req.params.id}) does not exist`,
+				});
+			}
+		})
+		.catch((err) => {
+			next({
+				apiCode: 500,
+				apiMessage:
+					'The user could not be removed',
+				...err,
+			});
+		});
+});
 
 module.exports = userRouter;

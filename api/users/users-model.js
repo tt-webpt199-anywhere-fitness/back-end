@@ -29,7 +29,7 @@ function findBy(filter) {
 
 // ?? Update user (id) ==> PUT
 async function updateUser(id, user) {
-	return await db('users')
+	const updatedUser = await db('users')
 		.update(user)
 		.where({ id })
 		.join('roles', 'roles.id', 'users.role_id')
@@ -39,6 +39,15 @@ async function updateUser(id, user) {
 			'users.password',
 			'roles.role_name'
 		);
+
+	userObj = {
+		id: id,
+		username: user.username,
+		password: user.password,
+		role: user.role_id === 1 ? 'Instructor' : 'User',
+	};
+
+	return userObj;
 }
 
 // ?? Delete user (id) ==> DELETE
