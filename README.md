@@ -1,8 +1,8 @@
-Endpoints
+# Endpoints
 
 ===================================
 
-// ?? POST ==> /api/auth/register ==> Create user
+## // ?? POST ==> /api/auth/register ==> Create user
 
 \*\* Return ==>
 {
@@ -13,7 +13,7 @@ Endpoints
 
 =====================================
 
-// ?? POST ==> /api/auth/login ==> Log in
+## // ?? POST ==> /api/auth/login ==> Log in
 
 \*\* Return ==>
 {
@@ -23,15 +23,15 @@ token: "0or439uin395v0284532n9-028409-4-094850-98c09-7854n7854cm548-152m8cn510mn
 
 =====================================
 
-// ?? GET ==> /api/users ==> Return array of all users
+## // ?? GET ==> /api/users ==> Return array of all users
 
 =====================================
 
-// ?? GET ==> /api/users/:id ==> Return user with specified ID
+## // ?? GET ==> /api/users/:id ==> Return user with specified ID
 
 =====================================
 
-// ?? PUT ==> /api/users/:id ==> Update user information
+## // ?? PUT ==> /api/users/:id ==> Update user information
 
 \*\* Return ==>
 {
@@ -43,7 +43,7 @@ token: "0or439uin395v0284532n9-028409-4-094850-98c09-7854n7854cm548-152m8cn510mn
 
 =====================================
 
-// ?? DELETE ==> /api/users/:id ==> Delete user
+## // ?? DELETE ==> /api/users/:id ==> Delete user
 
 \*\* Return ==>
 {
