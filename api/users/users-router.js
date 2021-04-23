@@ -1,6 +1,7 @@
 const userRouter = require('express').Router();
 const Users = require('./users-model');
 const { restricted, checkRole } = require('./users-middleware');
+const { checkPayload } = require('../auth/auth-middleware');
 
 // ?? GET ==> /api/users ==> Return array of all users
 
@@ -15,7 +16,7 @@ userRouter.get(
 	}
 );
 
-// TODO GET ==> /api/users/:id ==> Return user with specified ID
+// ?? GET ==> /api/users/:id ==> Return user with specified ID
 
 userRouter.get('/:id', (req, res, next) => {
 	Users.findById(req.params.id)
@@ -24,5 +25,32 @@ userRouter.get('/:id', (req, res, next) => {
 		})
 		.catch(next);
 });
+
+// ?? PUT ==> /api/users/:id ==> Update user information
+userRouter.put('/:id', checkPayload, async (req, res, next) => {
+	const { id } = req.params;
+	const user = req.body;
+
+	try {
+		const updatedUser = await Users.updateUser(id, user);
+		if (user) {
+			res.status(200).json({ updatedUser });
+		} else {
+			next({
+				apiCode: 404,
+				apiMessage: `The user with the specified ID (${id}) does not exist`,
+			});
+		}
+	} catch (err) {
+		next({
+			apiCode: 500,
+			apiMessage:
+				'The user information could not be modified',
+			...err,
+		});
+	}
+});
+
+// TODO DELETE ==> /api/users/:id ==> Delete user
 
 module.exports = userRouter;

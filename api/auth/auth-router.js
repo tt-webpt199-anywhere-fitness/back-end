@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const secret = require('../secrets');
 const bcrypt = require('bcryptjs');
 
-// TODO POST ==> /api/auth/register ==> Create user
+// ?? POST ==> /api/auth/register ==> Create user
 authRouter.post(
 	'/register',
 	checkUsernameExists,
@@ -20,7 +20,6 @@ authRouter.post(
 			credentials.password = hash;
 
 			const user = await Users.create(credentials);
-			// const token = generateToken(user);
 			res.status(201).json(user);
 		} catch (err) {
 			next({
@@ -32,7 +31,7 @@ authRouter.post(
 	}
 );
 
-// TODO POST ==> /api/auth/login ==> Log in
+// ?? POST ==> /api/auth/login ==> Log in
 authRouter.post('/login', checkPayload, async (req, res, next) => {
 	const { username, password } = req.body;
 	try {
@@ -41,8 +40,15 @@ authRouter.post('/login', checkPayload, async (req, res, next) => {
 		});
 		if (user && bcrypt.compareSync(password, user.password)) {
 			const token = generateToken(user);
+			console.log('user =====> ', user);
 			res.status(200).json({
-				message: `Welcome back, ${user.username}!`,
+				message: `Welcome back, ${
+					user.username
+				}, (${
+					user.role_id === 1
+						? 'Instructor'
+						: 'User'
+				})!`,
 				token: token,
 			});
 		} else {
@@ -67,7 +73,7 @@ function generateToken(user) {
 		role_name: user.role_name,
 	};
 	const options = {
-		expiresIn: '1 day',
+		expiresIn: '2 hours',
 	};
 	const token = jwt.sign(payload, secret.jwtSecret, options);
 

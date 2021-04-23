@@ -24,12 +24,26 @@ function findById(id) {
 
 // ?? Find user (filter) ==> GET
 function findBy(filter) {
-	return (
-		db('users')
-			// .join('roles', 'roles.id', 'users.role_id')
-			// .select('users.id', 'users.username', 'roles.role_name')
-			.where(filter)
-			.orderBy('id')
-	);
+	return db('users').where(filter).orderBy('id');
 }
-module.exports = { findAll, create, findById, findBy };
+
+// ?? Update user (id) ==> PUT
+async function updateUser(id, user) {
+	return await db('users')
+		.update(user)
+		.where({ id })
+		.join('roles', 'roles.id', 'users.role_id')
+		.select(
+			'users.id',
+			'users.username',
+			'users.password',
+			'roles.role_name'
+		);
+}
+
+// ?? Delete user (id) ==> DELETE
+async function deleteUser(id) {
+	return await db('users').del().where({ id });
+}
+
+module.exports = { findAll, create, findById, findBy, updateUser, deleteUser };
