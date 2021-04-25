@@ -8,6 +8,7 @@ exports.seed = function (knex) {
 			class_intensity: 4,
 			class_enrolled: 5,
 			class_max: 12,
+			location_id: 1,
 		},
 	]);
 };

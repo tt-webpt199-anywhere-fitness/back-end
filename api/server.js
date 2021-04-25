@@ -6,6 +6,7 @@ const errorHandler = require('./errorHandler');
 // ?? ==> routers
 const authRouter = require('./auth/auth-router');
 const userRouter = require('./users/users-router');
+const courseRouter = require('./courses/course-router');
 
 const server = express();
 
@@ -16,6 +17,7 @@ server.use(cors());
 // ?? ==> server.use(routers)
 server.use('/api/auth', authRouter);
 server.use('/api/users', userRouter);
+server.use('/api/courses', courseRouter);
 
 server.use(errorHandler);
 
