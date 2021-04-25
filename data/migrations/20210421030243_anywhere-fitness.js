@@ -20,7 +20,7 @@ exports.up = function (knex) {
 				.unique()
 				.index();
 			tbl.string('password', 128).notNullable();
-			tbl.integer('role_id')
+			tbl.bigint('role_id')
 				.unsigned()
 				.references('roles.id')
 				.onDelete('RESTRICT')
@@ -46,11 +46,25 @@ exports.up = function (knex) {
 				.references('locations.id')
 				.onDelete('CASCADE')
 				.onUpdate('CASCADE');
+		})
+		.createTable('course_user', (tbl) => {
+			tbl.increments();
+			tbl.bigint('class_id')
+				.unsigned()
+				.references('classes.id')
+				.onDelete('CASCADE')
+				.onUpdate('CASCADE');
+			tbl.bigint('user_id')
+				.unsigned()
+				.references('users.id')
+				.onDelete('CASCADE')
+				.onUpdate('CASCADE');
 		});
 };
 
 exports.down = function (knex) {
 	return knex.schema
+		.dropTableIfExists('course_user')
 		.dropTableIfExists('classes')
 		.dropTableIfExists('users')
 		.dropTableIfExists('locations')

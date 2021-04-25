@@ -1,6 +1,11 @@
 const db = require('../../data/db-config');
 
 // TODO findAll ==> GET
+function findAll() {
+	return db('classes')
+		.leftJoin('users', 'classes.user_id', 'users.id')
+		.leftJoin('locations', 'class.location_id', 'locations.id');
+}
 
 // TODO findById(id) ==> GET
 
