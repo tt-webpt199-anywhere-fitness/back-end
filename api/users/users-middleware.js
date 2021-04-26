@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const secret = require('../secrets');
+const Users = require('./users-model');
 
 // ?? restricted ==> Checks for valid token
 const restricted = (req, res, next) => {
@@ -48,4 +49,21 @@ const checkRole = (role_name) => (req, res, next) => {
 	}
 };
 
-module.exports = { restricted, checkRole };
+const checkUserId = async (req, res, next) => {
+	try {
+		const user = await Users.findById(req.params.id);
+		if (user) {
+			req.user = user;
+			next();
+		} else {
+			next({
+				apiCode: 404,
+				apiMessage: `User with ID ${req.params.id} does not exist`,
+			});
+		}
+	} catch (err) {
+		next(err);
+	}
+};
+
+module.exports = { restricted, checkRole, checkUserId };

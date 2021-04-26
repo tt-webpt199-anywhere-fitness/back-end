@@ -1,6 +1,7 @@
 const userRouter = require('express').Router();
 const Users = require('./users-model');
-const { restricted, checkRole } = require('./users-middleware');
+const Courses = require('../courses/course-model');
+const { checkUserId } = require('./users-middleware');
 const { checkPayload } = require('../auth/auth-middleware');
 
 // ?? GET ==> /api/users ==> Return array of all users
@@ -18,10 +19,20 @@ userRouter.get(
 
 // ?? GET ==> /api/users/:id ==> Return user with specified ID
 
-userRouter.get('/:id', (req, res, next) => {
+userRouter.get('/:id', checkUserId, (req, res, next) => {
 	Users.findById(req.params.id)
 		.then((user) => {
 			res.json(user);
+		})
+		.catch(next);
+});
+
+// ?? GET ==> /api/users/:id/courses ==> Return array of courses tied to user_id
+userRouter.get('/:id/courses', checkUserId, (req, res, next) => {
+	const { id } = req.params;
+	Courses.findCourses(id)
+		.then((courses) => {
+			res.json(courses);
 		})
 		.catch(next);
 });
