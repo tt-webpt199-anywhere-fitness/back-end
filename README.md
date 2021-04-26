@@ -2,7 +2,11 @@
 
 ===================================
 
-## // ?? POST ==> /api/auth/register ==> Create user
+## Users
+
+===================================
+
+### // ?? POST ==> /api/auth/register ==> Create user
 
 \*\* Return ==>
 {
@@ -13,7 +17,7 @@
 
 =====================================
 
-## // ?? POST ==> /api/auth/login ==> Log in
+### // ?? POST ==> /api/auth/login ==> Log in
 
 \*\* Return ==>
 {
@@ -23,15 +27,15 @@ token: "0or439uin395v0284532n9-028409-4-094850-98c09-7854n7854cm548-152m8cn510mn
 
 =====================================
 
-## // ?? GET ==> /api/users ==> Return array of all users
+### // ?? GET ==> /api/users ==> Return array of all users
 
 =====================================
 
-## // ?? GET ==> /api/users/:id ==> Return user with specified ID
+### // ?? GET ==> /api/users/:id ==> Return user with specified ID
 
 =====================================
 
-## // ?? PUT ==> /api/users/:id ==> Update user information
+### // ?? PUT ==> /api/users/:id ==> Update user information
 
 \*\* Return ==>
 {
@@ -43,7 +47,7 @@ token: "0or439uin395v0284532n9-028409-4-094850-98c09-7854n7854cm548-152m8cn510mn
 
 =====================================
 
-## // ?? DELETE ==> /api/users/:id ==> Delete user
+### // ?? DELETE ==> /api/users/:id ==> Delete user
 
 \*\* Return ==>
 {
@@ -51,3 +55,29 @@ token: "0or439uin395v0284532n9-028409-4-094850-98c09-7854n7854cm548-152m8cn510mn
 }
 
 =====================================
+
+## Courses
+
+=====================================
+
+### // ?? GET ==> /api/courses ==> Return array of all courses
+
+=====================================
+
+### // ?? GET ==> /api/courses/:id ==> Return course with specified ID
+
+=====================================
+
+### // ?? POST ==> /api/courses ==> Create new course
+
+\*\* Return ==>
+{
+"id": #,
+"course_name": "course",
+"course_type": "type",
+"course_start": "05/25/2021 04:00 PM",
+"course_duration": "45 minutes",
+"course_intensity": #,
+"course_enrolled": #,
+"course_max": #
+}

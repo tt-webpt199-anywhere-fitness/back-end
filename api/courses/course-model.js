@@ -17,35 +17,51 @@ function findAll() {
 			'C.class_max as max class size',
 			'L.location_name as location',
 			'L.location_address as location address'
-
-			// 'U.role_id'
 		)
 		.orderBy('C.id');
 }
 
-// TODO findById(id) ==> GET
+// ?? findById(id) ==> GET
+function findById(id) {
+	return db('classes as C')
+		.leftJoin('locations as L', 'L.id', 'C.location_id')
+		.leftJoin('users as U', 'U.id', 'C.user_id')
+		.select(
+			'C.id',
+			'U.username as instructor',
+			'C.class_name as course',
+			'C.class_type as course type',
+			'C.class_start as date and time',
+			'C.class_duration as duration',
+			'C.class_intensity as intensity',
+			'C.class_enrolled as students enrolled',
+			'C.class_max as max class size',
+			'L.location_name as location',
+			'L.location_address as location address'
+		)
+		.where('C.id', id)
+		.first();
+}
 
 // TODO findBy(filter) ==> GET
 
-// TODO createCourse ==> POST
+// ?? createCourse ==> POST
 const createCourse = async (course) => {
 	const [newCourse] = await db('classes as C')
-		.leftJoin('locations as L', 'L.id', 'classes.location_id')
+		.leftJoin('locations as L', 'L.id', 'C.location_id')
 		.leftJoin('users as U', 'U.id', 'C.user_id')
-		// .leftJoin('roles as R', 'R.id', 'U.role_id')
 		.select(
 			'C.id',
-			'C.class_name',
-			'C.class_type',
-			'C.class_start',
-			'C.class_duration',
-			'C.class_intensity',
-			'C.class_enrolled',
-			'C.class_max',
-			'L.location_name',
-			'L.location_address',
-			'U.username'
-			// 'R.role_name'
+			'U.username as instructor',
+			'C.class_name as course',
+			'C.class_type as course type',
+			'C.class_start as date and time',
+			'C.class_duration as duration',
+			'C.class_intensity as intensity',
+			'C.class_enrolled as students enrolled',
+			'C.class_max as max class size',
+			'L.location_name as location',
+			'L.location_address as location address'
 		)
 		.insert(course);
 	console.log('course =====> ', course);
@@ -72,7 +88,7 @@ const createCourse = async (course) => {
 
 module.exports = {
 	findAll,
-	// findById,
+	findById,
 	// findBy,
 	createCourse,
 	// updateCourse,

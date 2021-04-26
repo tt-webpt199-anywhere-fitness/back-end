@@ -50,4 +50,21 @@ const checkCoursePayload = async (req, res, next) => {
 	}
 };
 
-module.exports = { checkCoursePayload };
+const checkCourseId = async (req, res, next) => {
+	try {
+		const course = await Courses.findById(req.params.id);
+		if (course) {
+			req.course = course;
+			next();
+		} else {
+			next({
+				apiCode: 404,
+				apiMessage: `Course with ID ${req.params.id} does not exist`,
+			});
+		}
+	} catch (err) {
+		next(err);
+	}
+};
+
+module.exports = { checkCoursePayload, checkCourseId };
