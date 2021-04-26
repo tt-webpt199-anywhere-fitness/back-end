@@ -59,6 +59,24 @@ courseRouter.post('/', checkCoursePayload, (req, res, next) => {
 		.catch(next);
 });
 
+// ?? POST ==> /api/courses/:id/signup ==> sign up for course
+courseRouter.post('/:id/signup', (req, res, next) => {
+	const user = req.body;
+
+	Courses.signUp(user)
+		.then((count) => {
+			res.status(200).json(count);
+		})
+		.catch((err) => {
+			next({
+				apiCode: 500,
+				apiMessage:
+					'Error signing up for this course',
+				...err,
+			});
+		});
+});
+
 // ?? DELETE ==> /api/courses/:id ==> Delete course
 courseRouter.delete('/:id', (req, res, next) => {
 	Courses.deleteCourse(req.params.id)

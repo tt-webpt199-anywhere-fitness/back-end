@@ -102,6 +102,14 @@ const createCourse = async (course) => {
 	return newCourseObj;
 };
 
+// ?? Course sign up
+async function signUp(id, course) {
+	// let id = course.class_id;
+	await db('classes').where({ id }).increment('class_enrolled');
+
+	return await db('course_user').insert(course);
+}
+
 // ?? updateCourse ==> PUT
 async function updateCourse(id, course) {
 	const updatedCourse = await db('classes as C')
@@ -149,6 +157,7 @@ module.exports = {
 	findById,
 	findCourses,
 	createCourse,
+	signUp,
 	updateCourse,
 	deleteCourse,
 };
