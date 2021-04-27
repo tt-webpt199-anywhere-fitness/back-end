@@ -103,8 +103,8 @@ const createCourse = async (course) => {
 };
 
 // ?? Course sign up
-async function signUp(id, course) {
-	// let id = course.class_id;
+async function signUp(course) {
+	let id = course.class_id;
 	await db('classes').where({ id }).increment('class_enrolled');
 
 	return await db('course_user').insert(course);
