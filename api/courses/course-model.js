@@ -9,14 +9,14 @@ function findAll() {
 			'C.id',
 			'U.username as instructor',
 			'C.class_name as course',
-			'C.class_type as course type',
-			'C.class_start as date and time',
+			'C.class_type as course_type',
+			'C.class_start as start',
 			'C.class_duration as duration',
 			'C.class_intensity as intensity',
-			'C.class_enrolled as students enrolled',
-			'C.class_max as max class size',
+			'C.class_enrolled as enrolled',
+			'C.class_max as course_max',
 			'L.location_name as location',
-			'L.location_address as location address'
+			'L.location_address as address'
 		)
 		.orderBy('C.id');
 }
@@ -30,14 +30,14 @@ function findById(id) {
 			'C.id',
 			'U.username as instructor',
 			'C.class_name as course',
-			'C.class_type as course type',
-			'C.class_start as date and time',
+			'C.class_type as course_type',
+			'C.class_start as start',
 			'C.class_duration as duration',
 			'C.class_intensity as intensity',
-			'C.class_enrolled as students enrolled',
-			'C.class_max as max class size',
+			'C.class_enrolled as enrolled',
+			'C.class_max as course_max',
 			'L.location_name as location',
-			'L.location_address as location address'
+			'L.location_address as address'
 		)
 		.where('C.id', id)
 		.first();
@@ -52,14 +52,14 @@ function findCourses(user_id) {
 			'C.id',
 			'U.username as instructor',
 			'C.class_name as course',
-			'C.class_type as course type',
-			'C.class_start as date and time',
+			'C.class_type as course_type',
+			'C.class_start as start',
 			'C.class_duration as duration',
 			'C.class_intensity as intensity',
-			'C.class_enrolled as students enrolled',
-			'C.class_max as max class size',
+			'C.class_enrolled as enrolled',
+			'C.class_max as course_max',
 			'L.location_name as location',
-			'L.location_address as location address'
+			'L.location_address as address'
 		)
 		.where('C.user_id', user_id)
 		.orderBy('C.class_start');
@@ -74,14 +74,14 @@ const createCourse = async (course) => {
 			'C.id',
 			'U.username as instructor',
 			'C.class_name as course',
-			'C.class_type as course type',
-			'C.class_start as date and time',
+			'C.class_type as course_type',
+			'C.class_start as start',
 			'C.class_duration as duration',
 			'C.class_intensity as intensity',
-			'C.class_enrolled as students enrolled',
-			'C.class_max as max class size',
+			'C.class_enrolled as enrolled',
+			'C.class_max as course_max',
 			'L.location_name as location',
-			'L.location_address as location address'
+			'L.location_address as address'
 		)
 		.insert(course);
 	console.log('course =====> ', course);
@@ -121,14 +121,14 @@ async function updateCourse(id, course) {
 			'C.id',
 			'U.username as instructor',
 			'C.class_name as course',
-			'C.class_type as course type',
-			'C.class_start as date and time',
+			'C.class_type as course_type',
+			'C.class_start as start',
 			'C.class_duration as duration',
 			'C.class_intensity as intensity',
-			'C.class_enrolled as students enrolled',
-			'C.class_max as max class size',
+			'C.class_enrolled as enrolled',
+			'C.class_max as course_max',
 			'L.location_name as location',
-			'L.location_address as location address'
+			'L.location_address as address'
 		);
 
 	console.log('updatedCourse =====> ', updatedCourse);
