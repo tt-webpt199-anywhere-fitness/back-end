@@ -3,37 +3,37 @@ const Courses = require('./course-model');
 const checkCoursePayload = async (req, res, next) => {
 	const payload = req.body;
 
-	if (!payload.class_name) {
+	if (!payload.course) {
 		next({
 			apiCode: 400,
 			apiMessage:
 				'Course object must contain a course name',
 		});
-	} else if (!payload.class_type) {
+	} else if (!payload.course_type) {
 		next({
 			apiCode: 400,
 			apiMessage:
 				'Course object must contain a course type',
 		});
-	} else if (!payload.class_start) {
+	} else if (!payload.start) {
 		next({
 			apiCode: 400,
 			apiMessage:
 				'Course object must contain a start time',
 		});
-	} else if (!payload.class_duration) {
+	} else if (!payload.duration) {
 		next({
 			apiCode: 400,
 			apiMessage:
 				'Course object must contain a course duration',
 		});
-	} else if (!payload.class_intensity) {
+	} else if (!payload.intensity) {
 		next({
 			apiCode: 400,
 			apiMessage:
 				'Course object must contain a course intensity',
 		});
-	} else if (!payload.class_max) {
+	} else if (!payload.course_max) {
 		next({
 			apiCode: 400,
 			apiMessage:
