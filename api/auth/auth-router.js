@@ -43,6 +43,7 @@ authRouter.post('/login', checkPayload, async (req, res, next) => {
 			console.log('user =====> ', user);
 			res.status(200).json({
 				message: `Welcome back, ${user.username}!`,
+				id: user.id,
 				role:
 					user.role_id === 1
 						? 'Instructor'
